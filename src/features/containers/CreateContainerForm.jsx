@@ -8,6 +8,8 @@ import FileInput from "../../ui/FileInput";
 import { useCreateContainer } from "./useCreateContainer";
 import { useEditContainer } from "./useEditContainer";
 
+const date = new Date();
+
 function CreateContainerForm({ containerToEdit = {}, onCloseModal }) {
   const { id: editId, ...editValues } = containerToEdit;
   const isEditSession = Boolean(editId);
@@ -18,7 +20,13 @@ function CreateContainerForm({ containerToEdit = {}, onCloseModal }) {
     reset,
     formState: { errors },
   } = useForm({
-    defaultValues: isEditSession ? editValues : {},
+    defaultValues: isEditSession
+      ? editValues
+      : {
+          etaAvailability: "2024-01-01T00:00:00",
+          timeslot: "2024-01-01T00:00:00",
+          aqis: "2024-01-01",
+        },
   });
   const { isCreating, createContainer } = useCreateContainer();
   const { isEditing, editContainer } = useEditContainer();
@@ -92,17 +100,11 @@ function CreateContainerForm({ containerToEdit = {}, onCloseModal }) {
         <Input
           type="datetime-local"
           id="etaAvailaibility"
-          value="2999-01-01T00:00:00"
           {...register("etaAvailability")}
         />
       </FormRow>
       <FormRow label="P/U Timeslot">
-        <Input
-          type="datetime-local"
-          id="timeslot"
-          value="2999-01-01T00:00:00"
-          {...register("timeslot")}
-        />
+        <Input type="datetime-local" id="timeslot" {...register("timeslot")} />
       </FormRow>
       <FormRow
         label="AQIS Entry"
@@ -112,7 +114,7 @@ function CreateContainerForm({ containerToEdit = {}, onCloseModal }) {
         <Input type="text" id="aqisEntry" {...register("aqisEntry")} />
       </FormRow>
       <FormRow label="AQIS Date">
-        <Input type="date" id="aqis" value="2999-01-01" {...register("aqis")} />
+        <Input type="date" id="aqis" {...register("aqis")} />
       </FormRow>
 
       <FormRow
