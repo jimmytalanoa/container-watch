@@ -59,6 +59,21 @@ const Stacked = styled.div`
   }
 `;
 
+const Stacked2 = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+
+  & span:first-child {
+    font-weight: 500;
+  }
+
+  /* & span:last-child {
+    color: var(--color-grey-500);
+    font-size: 1.2rem;
+  } */
+`;
+
 function ContainerRow({ container, token, direction, country }) {
   const { isDeleting, deleteContainer } = useDeleteContainer();
   const { isCreating, createContainer } = useCreateContainer();
@@ -81,7 +96,6 @@ function ContainerRow({ container, token, direction, country }) {
     client,
     product,
     quantity,
-    aqis,
     user,
     image,
     file,
@@ -90,6 +104,12 @@ function ContainerRow({ container, token, direction, country }) {
     dehireLocation,
     dehireTransport,
     notes,
+    bio,
+    ifip,
+    bioDate,
+    ifipDate,
+    ifipRequested,
+    bioRequested,
   } = container;
 
   // API CONTAINER DATA CALL
@@ -155,11 +175,16 @@ function ContainerRow({ container, token, direction, country }) {
       client,
       product,
       quantity,
-      aqis,
       user,
       image,
       file,
       notes,
+      bio,
+      ifip,
+      bioDate,
+      ifipDate,
+      ifipRequested,
+      bioRequested,
     });
     toast.success("Container duplicated");
   }
@@ -216,6 +241,13 @@ function ContainerRow({ container, token, direction, country }) {
     REEFER: "blue",
   };
 
+  const aqisToTagName = {
+    NONE: "grey",
+    REQUIRED: "red",
+    PENDING: "yellow",
+    CONFIRMED: "green",
+  };
+
   //   grossWeight colour code
   // > 18 ton green
   // > 25 ton yellow
@@ -223,17 +255,6 @@ function ContainerRow({ container, token, direction, country }) {
   // > 30 ton red
 
   function grossLabel(weight) {
-    // switch (weight) {
-    //   case 18000 > weight:
-    //     return "Feather";
-    //   case weight > 18000 && 25000 > weight:
-    //     return "Light";
-    //   case weight > 25000 && 28000 > weight:
-    //     return "Medium";
-    //   case weight > 28000:
-    //     return "Heavy";
-    // }
-
     if ("18000" > weight) {
       return "Feather";
     } else if (weight > "18000" && "25000" > weight) {
@@ -276,29 +297,49 @@ function ContainerRow({ container, token, direction, country }) {
         {/* {image.length > 0 ? <Img src={image} /> : <span>{client}</span>} */}
         <Stacked>
           <Container>{containerNumber}</Container>
-
           <span>
             <Tag type={cargoTypeToTagName[cargoTypeDisplay.value]}>
               {sizeDisplay} - {cargoTypeDisplay.value}
             </Tag>
           </span>
-        </Stacked>
-        <SubContainer>
           {containerData?.equipmentJourney?.physicalEvents[0]?.name ? (
             containerData?.equipmentJourney?.physicalEvents[0]?.name
           ) : (
             <span>&mdash;</span>
           )}
-        </SubContainer>
-        <Stacked>
-          {aqis ? <SubContainer>{aqis}</SubContainer> : <span>&mdash;</span>}
+        </Stacked>
+        <SubContainer>{notes || <span>&mdash;</span>}</SubContainer>
+        <Stacked2>
           {aqisEntry ? (
             <SubContainer>{aqisEntry}</SubContainer>
           ) : (
             <span>&mdash;</span>
           )}
+
+          {bioDate ? (
+            <Tag type={aqisToTagName["CONFIRMED"]}>{bioDate}</Tag>
+          ) : bio && !bioRequested ? (
+            <Tag type={aqisToTagName["REQUIRED"]}>Bio</Tag>
+          ) : bio && bioRequested ? (
+            <Tag type={aqisToTagName["PENDING"]}>Bio</Tag>
+          ) : (
+            <span>&mdash;</span>
+          )}
+
+          {ifipDate ? (
+            <Tag type={aqisToTagName["CONFIRMED"]}>{ifipDate}</Tag>
+          ) : ifip && !ifipRequested ? (
+            <Tag type={aqisToTagName["REQUIRED"]}>IFIP</Tag>
+          ) : ifip && ifipRequested ? (
+            <Tag type={aqisToTagName["PENDING"]}>IFIP</Tag>
+          ) : (
+            <span>&mdash;</span>
+          )}
+        </Stacked2>
+        <Stacked>
+          <span>{portDisplay}</span>
+          <span>{vesselDisplay.value}</span>
         </Stacked>
-        <SubContainer>{vesselDisplay.value}</SubContainer>
         <Stacked>
           <SubContainer>{etaAvailabilityDisplay.label}</SubContainer>
           <SubContainer>{newDate.value}</SubContainer>
@@ -310,10 +351,9 @@ function ContainerRow({ container, token, direction, country }) {
           <SubContainer>BCS</SubContainer>
         )}
         <SubContainer>storage date</SubContainer>
-        <SubContainer>{portDisplay}</SubContainer>
         <Stacked>
           <div>
-            {quantity}x {product}
+            {quantity || ""}x {product}
           </div>
           <div>{client}</div>
         </Stacked>
@@ -384,7 +424,6 @@ function ContainerRow({ container, token, direction, country }) {
             lineOperator={containerData?.cargoAttribute?.lineOperator}
             originPort={containerData?.equipmentJourney?.originPortFacility}
             billOfLading={containerData?.equipmentJourney?.oceanBillOfLading}
-            notes={notes}
           ></ContainerDetailRow>
         </Table.Row>
       )}

@@ -6,6 +6,8 @@ import { cloneElement, createContext, useContext, useState } from "react";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 
 const StyledModal = styled.div`
+  max-height: 100vh;
+  overflow-y: auto;
   position: fixed;
   top: 50%;
   left: 50%;

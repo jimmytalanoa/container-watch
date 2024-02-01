@@ -50,17 +50,16 @@ function ContainerTable() {
 
   return (
     <Menus>
-      <Table columns="1fr 1fr .6fr .6fr 1fr .6fr .6fr .6fr .6fr .6fr .6fr .6fr .6fr .6fr .6fr">
+      <Table columns="1fr 1fr .8fr .6fr 1fr .6fr .6fr .6fr .8fr .6fr .6fr .6fr .2fr .2fr">
         <Table.Header>
           <div>Container</div>
-          <div>Status</div>
+          <div>Notes</div>
           <div>AQIS</div>
-          <div>Vessel</div>
+          <div>Wharf & Vessel</div>
           <div>Availability</div>
           <div>P/U Timeslot</div>
           <div>Delivery Destination</div>
           <div>Storage Date</div>
-          <div>Wharf</div>
           <div>Product</div>
           <div>De-Hire</div>
           <div>Holds</div>

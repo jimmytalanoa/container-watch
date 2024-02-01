@@ -1,6 +1,6 @@
 import Button from "../ui/Button";
 import Heading from "../ui/Heading";
-import Input from "../ui/Input";
+import { Input } from "../ui/Input";
 import Row from "../ui/Row";
 import { vesselData } from "../features/vessels/vesselData";
 import styled from "styled-components";

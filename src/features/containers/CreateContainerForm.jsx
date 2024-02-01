@@ -2,13 +2,11 @@ import { useForm } from "react-hook-form";
 
 import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
-import Input from "../../ui/Input";
+import { Input } from "../../ui/Input";
 import Button from "../../ui/Button";
 import FileInput from "../../ui/FileInput";
 import { useCreateContainer } from "./useCreateContainer";
 import { useEditContainer } from "./useEditContainer";
-
-const date = new Date();
 
 function CreateContainerForm({ containerToEdit = {}, onCloseModal }) {
   const { id: editId, ...editValues } = containerToEdit;
@@ -19,13 +17,13 @@ function CreateContainerForm({ containerToEdit = {}, onCloseModal }) {
     handleSubmit,
     reset,
     formState: { errors },
+    watch,
   } = useForm({
     defaultValues: isEditSession
       ? editValues
       : {
-          etaAvailability: "2024-01-01T00:00:00",
-          timeslot: "2024-01-01T00:00:00",
-          aqis: "2024-01-01",
+          bio: false,
+          ifip: false,
         },
   });
   const { isCreating, createContainer } = useCreateContainer();
@@ -61,6 +59,9 @@ function CreateContainerForm({ containerToEdit = {}, onCloseModal }) {
     console.log(errors);
   }
 
+  const [bioField, ifipField, aqisField] = watch(["bio", "ifip", "aqisEntry"]);
+  console.log(bioField, ifipField, aqisField);
+
   return (
     <Form
       onSubmit={handleSubmit(onSubmit, onError)}
@@ -89,12 +90,18 @@ function CreateContainerForm({ containerToEdit = {}, onCloseModal }) {
           })}
         />
       </FormRow>
+      <FormRow label="Cargo Type">
+        <select {...register("cargoType")}>
+          <option value="GENERAL">GENERAL</option>
+          <option value="REEFER">REEFER</option>
+          <option value="OTHER">OTHER</option>
+        </select>
+      </FormRow>
       <FormRow label="Size" error={errors?.size?.message} disabled={isWorking}>
-        <Input
-          type="number"
-          id="size"
-          {...register("size", { required: "This field is required" })}
-        />
+        <select {...register("size", { required: "This field is required" })}>
+          <option value="20">20</option>
+          <option value="40">40</option>
+        </select>
       </FormRow>
       <FormRow label="ETA">
         <Input
@@ -106,6 +113,7 @@ function CreateContainerForm({ containerToEdit = {}, onCloseModal }) {
       <FormRow label="P/U Timeslot">
         <Input type="datetime-local" id="timeslot" {...register("timeslot")} />
       </FormRow>
+
       <FormRow
         label="AQIS Entry"
         error={errors?.aqisentry?.message}
@@ -113,9 +121,66 @@ function CreateContainerForm({ containerToEdit = {}, onCloseModal }) {
       >
         <Input type="text" id="aqisEntry" {...register("aqisEntry")} />
       </FormRow>
-      <FormRow label="AQIS Date">
-        <Input type="date" id="aqis" {...register("aqis")} />
-      </FormRow>
+
+      {aqisField && (
+        <>
+          <FormRow
+            label="Bio"
+            error={errors?.bio?.message}
+            disabled={isWorking}
+          >
+            <Input type="checkbox" id="bio" {...register("bio")} />
+          </FormRow>
+          {bioField && (
+            <>
+              <FormRow
+                label="Bio Date"
+                error={errors?.bio?.message}
+                disabled={isWorking}
+              >
+                <Input type="date" id="bioDate" {...register("bioDate")} />
+              </FormRow>
+              <FormRow
+                label="Bio Requested"
+                error={errors?.bioRequested?.message}
+                disabled={isWorking}
+              >
+                <Input
+                  type="checkbox"
+                  id="bioRequested"
+                  {...register("bioRequested")}
+                />
+              </FormRow>
+            </>
+          )}
+
+          <FormRow label="IFIP">
+            <Input type="checkbox" id="ifip" {...register("ifip")} />
+          </FormRow>
+          {ifipField && (
+            <>
+              <FormRow
+                label="IFIP Date"
+                error={errors?.ifip?.message}
+                disabled={isWorking}
+              >
+                <Input type="date" id="ifipDate" {...register("ifipDate")} />
+              </FormRow>
+              <FormRow
+                label="IFIP Requested"
+                error={errors?.ifipRequested?.message}
+                disabled={isWorking}
+              >
+                <Input
+                  type="checkbox"
+                  id="ifipRequested"
+                  {...register("ifipRequested")}
+                />
+              </FormRow>
+            </>
+          )}
+        </>
+      )}
 
       <FormRow
         label="Vessel"

@@ -6,7 +6,7 @@ export async function getContainers({ filter, sortBy, page }) {
   let query = supabase
     .from("containers")
     .select(
-      "id, cargoType, containerNumber, size, aqisEntry, vessel, etaAvailability, discharge, timeslot, wharf, siteLocation, client, product, quantity, aqis, user, image, file",
+      "id, cargoType, containerNumber, size, aqisEntry, vessel, etaAvailability, discharge, timeslot, wharf, siteLocation, client, product, quantity, user, image, file, bio, ifip, notes, bioDate, ifipDate, ifipRequested, bioRequested",
       { count: "exact" }
     );
 

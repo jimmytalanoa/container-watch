@@ -99,7 +99,7 @@ export function determineAvailability(
 // 2023-11-06T01:10:00+11:00
 
 export function formatAPIDate(date) {
-  if (!date.length) return;
+  if (!date) return;
   // console.log(date)
   return format(parseISO(date), "yyyy-MM-dd kk:mm:ss");
   // const formattedDate = format(date.value + "Z", "yyyy-MM-dd kk:mm:ss xxx");

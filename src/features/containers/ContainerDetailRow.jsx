@@ -12,7 +12,6 @@ function ContainerDetailRow({
   lineOperator,
   originPort,
   billOfLading,
-  notes,
 }) {
   return (
     <>
@@ -22,7 +21,6 @@ function ContainerDetailRow({
       <StyledSpan>IMO: {vesselIMO}</StyledSpan>
       <StyledSpan>Origin Port: {originPort?.commonName}</StyledSpan>
       <StyledSpan>BOL: {billOfLading}</StyledSpan>
-      <StyledSpan>NOTES: {notes}</StyledSpan>
     </>
   );
 }
