@@ -1,4 +1,4 @@
-import { adobeCredentials } from "../utils/constants";
+import { adobeCredentials } from "../utils/creds";
 import axios from "axios";
 import QueryString from "qs";
 

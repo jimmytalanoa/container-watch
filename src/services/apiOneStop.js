@@ -1,9 +1,5 @@
-import {
-  oneStopTokenUrl,
-  BASE_64,
-  oneStopTrackingEndpoint,
-  apiKey,
-} from "../utils/constants";
+import { BASE_64, apiKey } from "../utils/creds";
+import { oneStopTokenUrl } from "../utils/constants";
 
 export async function getBearerToken() {
   var myHeaders = new Headers();
@@ -27,12 +23,7 @@ export async function getBearerToken() {
   return result;
 }
 
-export async function getContainerDetails(
-  container,
-  token,
-  country,
-  direction
-) {
+export async function getContainerDetails(container, token) {
   var myHeaders = new Headers();
   myHeaders.append("x-api-key", apiKey);
   myHeaders.append("Authorization", `Bearer ${token}`);

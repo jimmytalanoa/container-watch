@@ -1,5 +1,5 @@
 import axios from "axios";
-import { effectiveCredentials, rathCoCredentials } from "../utils/constants";
+import { effectiveCredentials, rathCoCredentials } from "../utils/creds";
 
 const gatewayHost = "https://api.cartoncloud.com";
 const tenantUuid = effectiveCredentials.tenants[0].id;

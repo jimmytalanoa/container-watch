@@ -7,7 +7,7 @@ import Table from "../../ui/Table";
 import { useNavigate } from "react-router-dom";
 import { getContainerDetails } from "../../services/apiOneStop";
 import { useEffect, useState } from "react";
-import { apiKey } from "../../utils/constants";
+import { apiKey } from "../../utils/creds";
 
 const Container = styled.div`
   font-size: 1.6rem;
