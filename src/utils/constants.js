@@ -4,8 +4,8 @@ export const oneStopTrackingEndpoint = "https://connect.1-stop.biz/tracking";
 export const BASE_64 = `MjBtMWRncnQ0OGU1ZmZ0YnBpOWQxdWMwcDg6amo1MHB0MTdyNjJobWZjdXB1NjM3ajdzbnU1bW1obWhzZzZ2YWpmMDE0cGUybjljcWZj`;
 export const apiKey = `KwE9DvuoUBaz5Vq8g0fqI6EpisfGearb1ORqhIS0`;
 
-const clientSecret = `jj50pt17r62hmfcupu637j7snu5mmhmhsg6vajf014pe2n9cqfc`;
-const clientId = `20m1dgrt48e5fftbpi9d1uc0p8`;
+// const clientSecret = `jj50pt17r62hmfcupu637j7snu5mmhmhsg6vajf014pe2n9cqfc`;
+// const clientId = `20m1dgrt48e5fftbpi9d1uc0p8`;
 
 // Credenitials for Adobe API Access
 // export const adobeCredentials = {
