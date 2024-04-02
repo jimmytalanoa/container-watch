@@ -25,6 +25,7 @@ const Container = styled.div`
   font-size: 2.3rem;
   font-weight: 600;
   color: var(--color-grey-600);
+  background-color: var(--color-red-100)
   font-family: sans-serif;
 `;
 
@@ -33,6 +34,13 @@ const SubContainer = styled.div`
   font-weight: 600;
   color: var(--color-grey-600);
   font-family: sans-serif;
+`;
+
+const StyledSpan = styled.span`
+  font-size: 1.4rem;
+  font-weight: 400;
+  font-family: sans-serif;
+  color: var(--color-grey-600);
 `;
 
 const Img = styled.img`
@@ -248,12 +256,6 @@ function ContainerRow({ container, token, direction, country }) {
     CONFIRMED: "green",
   };
 
-  //   grossWeight colour code
-  // > 18 ton green
-  // > 25 ton yellow
-  // > 28 ton orange
-  // > 30 ton red
-
   function grossLabel(weight) {
     if ("18000" > weight) {
       return "Feather";
@@ -270,18 +272,20 @@ function ContainerRow({ container, token, direction, country }) {
     containerData?.cargoAttribute?.grossWeight
   );
 
-  // console.log(containerData?.cargoAttribute?.grossWeight, grossWeightLabel);
-
   const grossToTagName = {
     Feather: "indigo",
     Light: "green",
     Medium: "yellow",
     Heavy: "red",
   };
-  // CONTAINER DETAIL OBJECT
-  // NOTE
 
-  //CONTAINER HOLD STATUS OBJECTS
+  const wharfToTagName = {
+    PAT: "indigo",
+    DP: "orange",
+    VICT: "blue",
+    OTHER: "yellow",
+  };
+
   const holds = [
     { label: "biosecurity", value: holdsData[0]?.biosecurity?.status },
     { label: "customs", value: holdsData[0]?.customs?.status },
@@ -297,23 +301,25 @@ function ContainerRow({ container, token, direction, country }) {
         {/* {image.length > 0 ? <Img src={image} /> : <span>{client}</span>} */}
         <Stacked>
           <Container>{containerNumber}</Container>
-          <span>
+          <StyledSpan>
             <Tag type={cargoTypeToTagName[cargoTypeDisplay.value]}>
               {sizeDisplay} - {cargoTypeDisplay.value}
             </Tag>
-          </span>
+          </StyledSpan>
           {containerData?.equipmentJourney?.physicalEvents[0]?.name ? (
-            containerData?.equipmentJourney?.physicalEvents[0]?.name
+            <StyledSpan>
+              {containerData?.equipmentJourney?.physicalEvents[0]?.name}
+            </StyledSpan>
           ) : (
-            <span>&mdash;</span>
+            <StyledSpan>&mdash;</StyledSpan>
           )}
         </Stacked>
-        <SubContainer>{notes || <span>&mdash;</span>}</SubContainer>
+        <StyledSpan>{notes || <StyledSpan>&mdash;</StyledSpan>}</StyledSpan>
         <Stacked2>
           {aqisEntry ? (
-            <SubContainer>{aqisEntry}</SubContainer>
+            <StyledSpan>{aqisEntry}</StyledSpan>
           ) : (
-            <span>&mdash;</span>
+            <StyledSpan>&mdash;</StyledSpan>
           )}
 
           {bioDate ? (
@@ -323,7 +329,7 @@ function ContainerRow({ container, token, direction, country }) {
           ) : bio && bioRequested ? (
             <Tag type={aqisToTagName["PENDING"]}>Bio</Tag>
           ) : (
-            <span>&mdash;</span>
+            <StyledSpan>&mdash;</StyledSpan>
           )}
 
           {ifipDate ? (
@@ -333,35 +339,35 @@ function ContainerRow({ container, token, direction, country }) {
           ) : ifip && ifipRequested ? (
             <Tag type={aqisToTagName["PENDING"]}>IFIP</Tag>
           ) : (
-            <span>&mdash;</span>
+            <StyledSpan>&mdash;</StyledSpan>
           )}
         </Stacked2>
         <Stacked>
-          <span>{portDisplay}</span>
-          <span>{vesselDisplay.value}</span>
+          <Tag type={wharfToTagName[portDisplay]}>{portDisplay}</Tag>
+          <StyledSpan>{vesselDisplay.value}</StyledSpan>
         </Stacked>
         <Stacked>
-          <SubContainer>{etaAvailabilityDisplay.label}</SubContainer>
-          <SubContainer>{newDate.value}</SubContainer>
+          <StyledSpan>{etaAvailabilityDisplay.label}</StyledSpan>
+          <StyledSpan>{newDate.value}</StyledSpan>
         </Stacked>
-        <SubContainer>{timeslot?.replace("T", " ") || "-"}</SubContainer>
+        <StyledSpan>{timeslot?.replace("T", " ") || "-"}</StyledSpan>
         {siteLocation ? (
-          <SubContainer>{siteLocation}</SubContainer>
+          <StyledSpan>{siteLocation}</StyledSpan>
         ) : (
-          <SubContainer>BCS</SubContainer>
+          <StyledSpan>BCS</StyledSpan>
         )}
-        <SubContainer>storage date</SubContainer>
+        <StyledSpan>storage date</StyledSpan>
         <Stacked>
-          <div>
-            {quantity || ""}x {product}
-          </div>
-          <div>{client}</div>
+          <StyledSpan>
+            {quantity || ""} {product}
+          </StyledSpan>
+          <StyledSpan>{client}</StyledSpan>
         </Stacked>
 
         <Stacked>
-          <div>{dehire}</div>
-          <div>{dehireLocation}</div>
-          <div>{dehireTransport}</div>
+          <StyledSpan>{dehire}</StyledSpan>
+          <StyledSpan>{dehireLocation}</StyledSpan>
+          <StyledSpan>{dehireTransport}</StyledSpan>
         </Stacked>
         <SubContainer>
           {holds.map((hold) => (

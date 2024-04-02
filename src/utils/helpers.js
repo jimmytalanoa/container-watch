@@ -100,7 +100,6 @@ export function determineAvailability(
 
 export function formatAPIDate(date) {
   if (!date) return;
-  // console.log(date)
   return format(parseISO(date), "yyyy-MM-dd kk:mm:ss");
   // const formattedDate = format(date.value + "Z", "yyyy-MM-dd kk:mm:ss xxx");
 }

@@ -8,6 +8,7 @@ import {
 } from "react-icons/hi2";
 import { LuContainer } from "react-icons/lu";
 import { RiShipLine } from "react-icons/ri";
+import { FaRegFilePdf } from "react-icons/fa";
 
 const NavList = styled.ul`
   display: flex;
@@ -82,6 +83,12 @@ function MainNav() {
           <StyledNavLink to="/vessels">
             <RiShipLine />
             <span>Vessels</span>
+          </StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to="/parser">
+            <FaRegFilePdf />
+            <span>Parser</span>
           </StyledNavLink>
         </li>
         <li>

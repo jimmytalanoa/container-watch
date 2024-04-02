@@ -15,6 +15,7 @@ import AppLayout from "./ui/AppLayout";
 import { Toaster } from "react-hot-toast";
 import Vessels from "./pages/Vessels";
 import ProtectedRoute from "./ui/ProtectedRoute";
+import Parser from "./pages/Parser";
 
 function App() {
   // react query
@@ -46,6 +47,7 @@ function App() {
               <Route path="timeslots" element={<Timeslots />} />
               <Route path="containers" element={<Containers />} />
               <Route path="vessels" element={<Vessels />} />
+              <Route path="parser" element={<Parser />} />
               <Route path="users" element={<Users />} />
               <Route path="settings" element={<Settings />} />
               <Route path="account" element={<Account />} />

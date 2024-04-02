@@ -194,7 +194,12 @@ function CreateContainerForm({ containerToEdit = {}, onCloseModal }) {
         error={errors?.wharf?.message}
         disabled={isWorking}
       >
-        <Input type="text" id="wharf" />
+        <select {...register("wharf", { required: "This field is required" })}>
+          <option value="DP">DP</option>
+          <option value="PAT">PAT</option>
+          <option value="VICT">VICT</option>
+          <option value="OTHER">OTHER</option>
+        </select>
       </FormRow>
       <FormRow
         label="Site Location"
