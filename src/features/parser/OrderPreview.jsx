@@ -164,7 +164,9 @@ function OrderPreview(file, isLoading) {
           <FormRow label="Customer Reference">
             <Input
               type="text"
-              defaultValue={orderDetails?.CustomerRef || ""}
+              defaultValue={
+                orderDetails?.CustomerRef || orderDetails?.PickingSlipNo
+              }
               id="customerReference"
               {...register2("customerReference")}
             ></Input>
